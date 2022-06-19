@@ -14,6 +14,8 @@ RUN apt-get update && \
        cmake \
        curl \
        git \
+       freeglut3-dev \
+       libcgal-dev \
        libatlas-base-dev \
        libsuitesparse-dev \
        libboost-all-dev \
@@ -29,10 +31,13 @@ RUN apt-get update && \
        libhwloc-dev \
        libjemalloc-dev \
        libjpeg-dev \
+       libmetis-dev \
        libmpich-dev \
        libopenexr-dev \
        libopenimageio-dev \
        libproj-dev \
+       libsuitesparse-dev \
+       librocksdb-dev \
        libtbb2 \
        libtbb-dev \
        libtiff5-dev \
@@ -45,6 +50,7 @@ RUN apt-get update && \
        mercurial \
        mpich \
        pkg-config \
+       rapidjson-dev \
        software-properties-common \
        subversion \
        zlib1g-dev \
@@ -72,15 +78,15 @@ RUN git clone https://github.com/google/googletest.git && \
 #
 RUN git clone https://github.com/ceres-solver/ceres-solver.git && \
       cd ceres-solver && \
-      git checkout 1.13.0 && \
+      git checkout 1.14.0 && \
       mkdir ceres-bin && \
       cd ceres-bin && \
-      cmake .. \
+      cmake CXXFLAGS=-stc=c++11 .. \
         -DBUILD_TESTING=OFF \
         -DBUILD_DOCUMENTATION=OFF \
         -DBUILD_EXAMPLES=OFF \
         -DBUILD_SHARED_LIBS=ON && \
-    make -j7 && \
+    make CXXFLAGS=-stc=c++11 -j4 && \
     make install && \
     cd ../.. && \
     rm -r ceres-solver
@@ -91,10 +97,10 @@ RUN git clone https://github.com/sweeneychris/TheiaSfM.git && \
     cd TheiaSfM && \
     mkdir build && \
     cd build && \
-    cmake .. && \
-    make -j7 && \
+    cmake CXXFLAGS=-std=c++11 .. && \
+    make CXXFLAGS=-std=c++11 -j4 && \
     make install && \
-    cd ../..
+    cd ../
 
 #
 #COLMAP
@@ -102,8 +108,9 @@ RUN git clone https://github.com/sweeneychris/TheiaSfM.git && \
 RUN git clone https://github.com/colmap/colmap.git && \
       cd colmap && \
       mkdir build && \
-      cmake .. && \
-      make -j7 && \
+      cd build && \
+      cmake CXXFLAGS=-std=c++11 .. && \
+      make CXXFLAGS=-std=c++11 -j4 && \
       make install && \
       cd ..
 ##
