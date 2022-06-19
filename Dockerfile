@@ -3,15 +3,6 @@ MAINTAINER Juan Santisi "juan@santisi.io"
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get install -y tzdata
 
-#RUN apt-get update -y && \
-#	apt-get upgrade -y && \
-#	apt-get install -y \
-#	gcc-10 \
-#	g++-10 \
-#	cpp-10 
-
-#RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 --slave /usr/bin/gcov gcov /usr/bin/gcov-10
-
 RUN apt-get update && \
        apt-get install -y --no-install-recommends \
        apt-transport-https \
